@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos Modificadores</title>
+</head>
+<body>
+
+<div id="app">
+
+    <a :href="urllink" @click.prevent="alert">{{ textLink }}</a>
+
+    <form action="#" method="POST" @submit.prevent="alert">
+        <input type="text" placeholder="Qual seu nome?">
+        <button type="submit">Enviar</button>
+    </form>
+
+    <button @click.once="alert">Clique aqui</button>
+    
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+
+    new Vue({
+        el:"#app",
+        data:{
+
+            textLink: "Youtube",
+            urllink:"http://www.youtube.com.br"
+
+        },
+        methods:{
+            alert(event){
+
+                alert("Olá humanos")
+
+            }
+        }
+    })
+
+</script>
+    
+</body>
+</html>
