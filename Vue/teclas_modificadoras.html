@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos Teclado</title>
+</head>
+<body>
+
+<div id="app">
+
+    <h1 @click.alt ="teclasModone">
+        Clique Aqui.       
+    </h1>
+
+    <h2 @click.ctrl.exact ="teclasModtwo">
+        Agora clique aqui.
+    </h2>
+
+    <h2>
+        Agora escreva algo aqui:
+    </h2>
+
+    <div v-on:keyup.alt.67="teclasModtree">
+        <input type="text">
+        <p>{{ text }}</p>  
+    </div>
+    
+</div>    
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script>
+    new Vue({
+        el: "#app",
+        data:{
+            text:''
+
+        }, methods:{
+
+            teclasModone(){
+                alert("Olá mundo!")
+            },
+
+            teclasModtwo(){
+                alert("Olá humanos!")
+            },
+
+            teclasModtree(){
+                this.text = event.target.value
+            },
+        }
+    })
+</script>
+</body>
+</html>
