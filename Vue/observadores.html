@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observadores</title>
+</head>
+<body>
+    <div id="app">
+         <p>
+          Faça uma pergunta do tipo sim/não:
+          <input v-model="pergunta">
+        </p>
+        <p>{{ answer }}</p>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+
+<script>
+    new Vue({
+        
+        el: '#app',
+        data: {
+            pergunta: '',
+            answer: 'Eu não posso responder até que você faça uma pergunta!'
+        },
+       
+        watch: {
+        pergunta: function (newPergunta, oldPergunta) {
+        this.answer = 'Esperando você parar de escrever...'
+        this.debouncedGetAnswer()
+        }
+    }, created: function () {
+        this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+    },
+
+    methods: {
+        getAnswer: function () {
+        if (this.pergunta.indexOf('?') === -1) {
+            this.answer = 'Perguntas geralmente têm uma interrogação. ;-)'
+            return
+        }
+        this.answer = 'Pensando...'
+        var vm = this
+        axios.get('https://yesno.wtf/api')
+            .then(function (response) {
+            vm.answer = response.data.answer === 'yes' ? 'Sim.' :
+                response.data.answer === 'no' ? 'Não.' : 'Talvez!'
+            })
+            .catch(function (error) {
+            vm.answer = 'Erro! Não pode executar a API. ' + error
+            })
+        }
+  }
+})
+    </script>
+</body>
+</html>
